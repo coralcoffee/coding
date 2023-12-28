@@ -72,30 +72,27 @@ public class Solution
 {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
     {
-        int sum = l1.val + l2.val;
-        int carrier = sum / 10;
-        ListNode result = new ListNode(sum % 10);
-        ListNode current = result;
-        while (l1.next != null || l2.next != null)
+        var result = new ListNode(0);
+        ListNode ln1 = l1, ln2 = l2, current = result;
+        int carry = 0, sum = 0;
+        while (ln1 != null || ln2 != null)
         {
-            sum = carrier;
-            if (l1.next != null)
-            {
-                l1 = l1.next;
-                sum += l1.val;
-            }
-            if (l2.next != null)
-            {
-                l2 = l2.next;
-                sum += l2.val;
-            }
+            int x = (ln1 != null) ? ln1.val : 0;
+            int y = (ln2 != null) ? ln2.val : 0;
 
-            carrier = sum / 10;
+            sum = carry + x + y;
+            carry = sum / 10;
             current.next = new ListNode(sum % 10);
             current = current.next;
+            if (ln1 != null) ln1 = ln1.next;
+            if (ln2 != null) ln2 = ln2.next;
         }
-        if (carrier > 0) current.next = new ListNode(carrier);
-        return result;
+
+        if (carry > 0)
+        {
+            current.next = new ListNode(1);
+        }
+        return result.next;
     }
 }
 // @lc code=end
