@@ -68,6 +68,7 @@ public class Solution
             result = Math.Max(result, i - start);
             dict[s[i]] = i;
         }
+        
         return result;
     }
 }
