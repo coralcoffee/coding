@@ -59,30 +59,37 @@ public class Solution
         int m = nums1.Length;
         int n = nums2.Length;
 
-        int low = 0, high = m;
+        if (m == 0)
+            return n % 2 == 0 ? (nums2[n / 2 - 1] + nums2[n / 2]) / 2.0 : nums2[n / 2];
+
+        int low = 0, high = m, halfLen = (m + n + 1) / 2;
 
         while (low <= high)
         {
             int partitionX = (low + high) / 2;
-            int partitionY = (m + n + 1) / 2 - partitionX;
+            int partitionY = halfLen - partitionX;
 
-            int leftX = partitionX == 0 ? Int32.MinValue : nums1[partitionX - 1];
-            int leftY = partitionY == 0 ? Int32.MinValue : nums2[partitionY - 1];
-
-            int rightX = partitionX == m ? Int32.MaxValue : nums1[partitionX];
-            int rightY = partitionY == n ? Int32.MaxValue : nums2[partitionY];
-
-            if (leftX <= rightY && leftY <= rightX)
+            if (partitionX < m && nums2[partitionY - 1] > nums1[partitionX])
             {
-                if ((m + n) % 2 == 0)
-                    return (Math.Max(leftX, leftY) + Math.Min(rightX, rightY)) / 2.0;
-                else
-                    return (double)Math.Max(leftX, leftY);
-            }
-            else if (leftX > rightY)
-                high = partitionX - 1;
-            else
                 low = partitionX + 1;
+            }
+            else if (partitionX > 0 && nums1[partitionX - 1] > nums2[partitionY])
+            {
+                high = partitionX - 1;
+            }
+            else
+            {
+                int maxLeft = Math.Max(partitionX == 0 ? Int32.MinValue : nums1[partitionX - 1],
+                                       partitionY == 0 ? Int32.MinValue : nums2[partitionY - 1]);
+
+                if ((m + n) % 2 == 1)
+                    return maxLeft;
+
+                int minRight = Math.Min(partitionX == m ? Int32.MaxValue : nums1[partitionX],
+                                        partitionY == n ? Int32.MaxValue : nums2[partitionY]);
+
+                return (maxLeft + minRight) / 2.0;
+            }
         }
         return 0;
     }
