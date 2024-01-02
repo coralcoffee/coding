@@ -55,25 +55,42 @@ public class Solution
 {
     public IList<IList<int>> FourSum(int[] nums, int target)
     {
-        var result = new List<IList<int>>();
         Array.Sort(nums);
-        for (int i = 0; i < nums.Length - 3; i++)
+        var result = new List<IList<int>>();
+        int n = nums.Length;
+
+        for (int i = 0; i < n; i++)
         {
-            for (int j = i + 1; j < nums.Length - 2; j++)
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            for (int j = i + 1; j < n; j++)
             {
-                for (int k = j + 1; k < nums.Length - 1; k++)
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+
+                int left = j + 1, right = n - 1;
+                while (left < right)
                 {
-                    for (int l = k + 1; l < nums.Length; l++)
+                    long total = nums[i] + nums[j] + (long)nums[left] + (long)nums[right];
+                    if (total < target)
                     {
-                        if (nums[i] + nums[j] + nums[k] + nums[l] == target
-                        && i != j && i != k && i != l && j != k && j != l && k != l)
-                        {
-                            result.Add(new List<int>() { nums[i], nums[j], nums[k], nums[l] });
-                        }
+                        left++;
+                    }
+                    else if (total > target)
+                    {
+                        right--;
+                    }
+                    else if (total == (long)target)
+                    {
+                        result.Add(new List<int> { nums[i], nums[j], nums[left], nums[right] });
+                        while (left < right && nums[left] == nums[left + 1]) left++;
+                        while (left < right && nums[right] == nums[right - 1]) right--;
+                        left++;
+                        right--;
                     }
                 }
             }
         }
+
         return result;
     }
 }
