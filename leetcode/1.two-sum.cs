@@ -64,7 +64,8 @@ public class Solution
 {
     public int[] TwoSum(int[] nums, int target)
     {
-        var dict = new Dictionary<int, int>() { { nums[0], 0 } };
+        var dict = new Dictionary<int, int>();
+        dict[nums[0]] = 0;
         for (int i = 1; i < nums.Length; i++)
         {
             var sub = target - nums[i];
