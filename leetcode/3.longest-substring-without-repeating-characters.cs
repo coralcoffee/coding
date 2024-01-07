@@ -58,8 +58,8 @@ public class Solution
 {
     public int LengthOfLongestSubstring(string s)
     {
-        var dict = new Dictionary<char, int>();
         int result = 0;
+        var dict = new Dictionary<char, int>();
         int start = -1;
         for (int i = 0; i < s.Length; i++)
         {
@@ -68,7 +68,6 @@ public class Solution
             result = Math.Max(result, i - start);
             dict[s[i]] = i;
         }
-        
         return result;
     }
 }
