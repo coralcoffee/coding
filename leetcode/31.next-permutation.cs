@@ -75,9 +75,46 @@
 // @lc code=start
 public class Solution
 {
+    private int[] _nums;
     public void NextPermutation(int[] nums)
     {
-        
+        if (nums == null || nums.Length < 2) return;
+        _nums = nums;
+        int i = nums.Length - 2;
+
+        while (i >= 0 && nums[i] >= nums[i + 1])
+        {
+            i--;
+        }
+
+        if (i >= 0)
+        {
+            int j = nums.Length - 1;
+            while (nums[j] <= nums[i])
+            {
+                j--;
+            }
+            Swap(i, j);
+        }
+
+        Reverse(i + 1, nums.Length - 1);
+    }
+
+    void Swap(int i, int j)
+    {
+        _nums[i] = _nums[i] ^ _nums[j];
+        _nums[j] = _nums[i] ^ _nums[j];
+        _nums[i] = _nums[i] ^ _nums[j];
+    }
+
+    void Reverse(int start, int end)
+    {
+        while (start < end)
+        {
+            Swap(start, end);
+            start++;
+            end--;
+        }
     }
 }
 // @lc code=end
