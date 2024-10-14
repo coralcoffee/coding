@@ -62,13 +62,12 @@
 // @lc code=start
 
 import java.util.HashMap;
-import java.util.Map;
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> dict = new HashMap<>();
+        HashMap<Integer, Integer> dict = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int sub = target - nums[i];
+            var sub = target - nums[i];
             if (dict.containsKey(sub)) {
                 return new int[] { dict.get(sub), i };
             }
