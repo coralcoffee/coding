@@ -47,22 +47,21 @@ class Solution {
         if (s.length() < 2)
             return s;
         int startIndex = 0, maxLength = 0;
-        int start = 0, end = 0;
         for (int i = 0; i < s.length(); i++) {
-            start = end = i;
-            while (end < s.length() - 1 && s.charAt(start) == s.charAt(end + 1)) {
-                end++;
+            int left = i, right = i;
+            while (right < s.length() - 1 && s.charAt(i) == s.charAt(right + 1)) {
+                right++;
             }
-            while (start > 0 && end < s.length() - 1 && s.charAt(start - 1) == s.charAt(end + 1)) {
-                start--;
-                end++;
+            while (left > 0 && right < s.length() - 1 && s.charAt(left - 1) == s.charAt(right + 1)) {
+                left--;
+                right++;
             }
-            if ((end - start + 1) > maxLength) {
-                maxLength = end - start + 1;
-                startIndex = start;
+            if (maxLength < right - left + 1) {
+                startIndex = left;
+                maxLength = right - left + 1;
             }
         }
-        return s.substring(startIndex, startIndex + maxLength);
+        return s.substring(startIndex, startIndex+maxLength);
     }
 }
 // @lc code=end
