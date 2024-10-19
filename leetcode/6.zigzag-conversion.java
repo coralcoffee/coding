@@ -73,85 +73,28 @@
 // @lc code=start
 class Solution {
     public String convert(String s, int numRows) {
-        if (numRows == 1 || numRows >= s.length()) {
+        if (numRows < 2 || numRows >= s.length()) {
             return s;
         }
-        
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) rows[i] = new StringBuilder();
-        
-        int curRow = 0;
-        boolean goingDown = false;
-        
-        for (char c : s.toCharArray()) {
-            rows[curRow].append(c);
-            if (curRow == 0 || curRow == numRows - 1) goingDown = !goingDown;
-            curRow += goingDown ? 1 : -1;
-        }
-        
-        StringBuilder result = new StringBuilder();
-        for (StringBuilder row : rows) result.append(row);
-        
-        return result.toString();
-    }
-}
-class Solution2 {
-    public String convert(String s, int numRows) {
-        if (numRows <= 1)
-            return s;
-        int groupSize = 2 * numRows - 2;
-        int groupCount = s.length() / groupSize;
-        if (s.length() % groupSize != 0)
-            groupCount++;
-        StringBuilder sb = new StringBuilder();
-        int p = 0;
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < groupCount; j++) {
-                if (i == 0 || i == numRows - 1) {
-                    p = j * groupSize + i;
-                    if (p < s.length())
-                        sb.append(s.charAt(p));
-                } else {
-                    p = j * groupSize + i;
-                    if (p < s.length())
-                        sb.append(s.charAt(p));
-                    p = (j + 1) * groupSize - i;
-                    if (p < s.length())
-                        sb.append(s.charAt(p));
-                }
-            }
-        }
-        return sb.toString();
-    }
-}
 
-class Solution1 {
-    public String convert(String s, int numRows) {
-        if (numRows <= 1)
-            return s;
-        int groupSize = 2 * numRows - 2;
-        int groupCount = s.length() / groupSize;
-        if (s.length() % groupSize != 0)
-            groupCount++;
-        char[] charArray = new char[s.length()];
-        int index = 0, p = 0;
+        StringBuilder[] rows = new StringBuilder[numRows];
         for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < groupCount; j++) {
-                if (i == 0 || i == numRows - 1) {
-                    p = j * groupSize + i;
-                    if (p < s.length())
-                        charArray[index++] = s.charAt(p);
-                } else {
-                    p = j * groupSize + i;
-                    if (p < s.length())
-                        charArray[index++] = s.charAt(p);
-                    p = (j + 1) * groupSize - i;
-                    if (p < s.length())
-                        charArray[index++] = s.charAt(p);
-                }
-            }
+            rows[i] = new StringBuilder();
         }
-        return new String(charArray);
+        int currentRow = 0;
+        boolean isGoingDown = false;
+        for (char c : s.toCharArray()) {
+            rows[currentRow].append(c);
+            if (currentRow == 0 || currentRow == numRows - 1) {
+                isGoingDown = !isGoingDown;
+            }
+            currentRow += isGoingDown ? 1 : -1;
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
+        }
+        return result.toString();
     }
 }
 // @lc code=end
