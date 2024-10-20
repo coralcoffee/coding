@@ -2,19 +2,24 @@ import java.util.Scanner;
 
 public class sample1 {
     public static void main(String[] args) {
+        sample1 sample = new sample1();
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(sample.reverse(-1534236469));
+    }
 
-        Scanner inp = new Scanner("50");
-        int s = inp.nextInt(); // s = 50 
-        run(s);
-        System.out.println(s);
-
-        System.out.println("-------------------");
-
-        Car car1 = new Car(); //Speed = 0
-        car1.Speed = s; // car1 = 50
-        run(car1);
-        System.out.println(car1.Speed);
-        inp.close();
+    public int reverse(int x) {
+        int result = 0;
+        Integer num = x;
+        while (num != 0) {
+            if (result > Integer.MAX_VALUE / 10
+                    || result < Integer.MIN_VALUE / 10) {
+                return 0;
+            }
+            result = result * 10 + (num % 10);
+            num = num / 10;
+        }
+        return result;
     }
 
     static void run(int speed) {
