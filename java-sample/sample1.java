@@ -3,9 +3,39 @@ import java.util.Scanner;
 public class sample1 {
     public static void main(String[] args) {
         sample1 sample = new sample1();
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(Integer.MIN_VALUE);
-        System.out.println(sample.reverse(-1534236469));
+        // System.out.println(Integer.MAX_VALUE);
+        // System.out.println(Integer.MIN_VALUE);
+        System.out.println(sample.myAtoi("-21474836472"));
+    }
+
+    public int myAtoi(String s) {
+        int index = 0;
+        int result = 0;
+        int sign = 1;
+
+        while (index < s.length() && s.charAt(index) == ' ') {
+            index++;
+        }
+
+        if (index < s.length() && (s.charAt(index) == '-' || s.charAt(index) == '+')) {
+            if (s.charAt(index) == '-') {
+                sign = -1;
+            }
+            index++;
+        }
+
+        while (index < s.length() && s.charAt(index) >= '0' && s.charAt(index) <= '9') {
+            int digit = s.charAt(index) - '0';
+            if (result > (Integer.MAX_VALUE - digit) / 10) {
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+
+            result = result * 10 + digit;
+
+            System.out.println(result);
+            index++;
+        }
+        return result * sign;
     }
 
     public int reverse(int x) {
