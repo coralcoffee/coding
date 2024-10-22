@@ -5,7 +5,23 @@ public class sample1 {
         sample1 sample = new sample1();
         // System.out.println(Integer.MAX_VALUE);
         // System.out.println(Integer.MIN_VALUE);
-        System.out.println(sample.myAtoi("-21474836472"));
+        System.out.println(sample.isPalindrome(121));
+    }
+
+    public boolean isPalindrome(int x) {
+        if (x < 0)
+            return false;
+        return isPalindrome(x / 10, x % 10, x);
+    }
+
+    boolean isPalindrome(int num1, int digit, int num2) {
+        if (num1 == digit) {
+            return true;
+        } else if (num1 == 0) {
+            return false;
+        }
+        return isPalindrome(num1 / 10, digit, num2)
+                && isPalindrome(num2);
     }
 
     public int myAtoi(String s) {
