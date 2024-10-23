@@ -1,11 +1,30 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class sample1 {
     public static void main(String[] args) {
         sample1 sample = new sample1();
         // System.out.println(Integer.MAX_VALUE);
         // System.out.println(Integer.MIN_VALUE);
-        System.out.println(sample.isPalindrome(121));
+        System.out.println(sample.romanToInt("LVIII"));
+    }
+
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> symbolValues = new HashMap<>();
+        symbolValues.put('I', 1);
+        symbolValues.put('V', 5);
+        symbolValues.put('X', 10);
+        symbolValues.put('L', 50);
+        symbolValues.put('C', 100);
+        symbolValues.put('D', 500);
+        symbolValues.put('M', 1000);
+        int result = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int curValue = symbolValues.get(s.charAt(i));
+            int nextValue = i < s.length() - 1 ? symbolValues.get(s.charAt(i + 1)) : 0;
+
+            result += curValue < nextValue ? curValue * -1 : curValue;
+        }
+        return result;
     }
 
     public boolean isPalindrome(int x) {
