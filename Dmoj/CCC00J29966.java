@@ -10,34 +10,31 @@ public class CCC00J29966 {
         inp.close();
         int result = 0;
         for (int i = start; i <= end; i++) {
-            String str = Integer.toString(i);
-            boolean isSame = false;
-            for (int j = 0; j < (str.length() + 1) / 2; j++) {
-                char c = str.charAt(j);
-                switch (c) {
-                    case '0':
-                    case '1':
-                    case '8':
-                        isSame = c == str.charAt(str.length() - j - 1);
-                        break;
-                    case '6':
-                        isSame = '9' == str.charAt(str.length() - j - 1);
-                        break;
-                    case '9':
-                        isSame = '6' == str.charAt(str.length() - j - 1);
-                        break;
-                    default:
-                        isSame = false;
-                        break;
-                }
-                if (!isSame)
-                    break;
-            }
-            if (isSame) {
+            if (isStrobogrammatic(i)) {
                 result++;
             }
-            isSame = false;
         }
         System.out.println(result);
+    }
+
+    private static boolean isStrobogrammatic(int num) {
+        String str = Integer.toString(num);
+        int left = 0;
+        int right = str.length() - 1;
+        while (left <= right) {
+            char leftChar = str.charAt(left);
+            char rightChar = str.charAt(right);
+
+            if (!((leftChar == '0' && rightChar == '0') ||
+                    (leftChar == '1' && rightChar == '1') ||
+                    (leftChar == '8' && rightChar == '8') ||
+                    (leftChar == '6' && rightChar == '9') ||
+                    (leftChar == '9' && rightChar == '6'))) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
     }
 }
