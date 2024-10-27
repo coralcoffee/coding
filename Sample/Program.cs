@@ -1,16 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
-int[] nums = { 1, 2, 3, 4, 5 };
+int[] nums = { 1, 2, 3, 4, 5, 6 };
 var permutations = GetPermutations(nums, nums.Length);
-
+int permutation = 0;
 foreach (var perm in permutations)
 {
     foreach (var num in perm)
     {
         Console.Write(num + " ");
     }
+    permutation++;
     Console.WriteLine();
 }
+Console.WriteLine($"Permutation is: {permutation}");
 
 List<List<int>> GetPermutations(int[] nums, int length)
 {
