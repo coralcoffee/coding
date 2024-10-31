@@ -59,18 +59,19 @@ public class Solution
 {
     public int LengthOfLastWord(string s)
     {
-        int length = 0;
-        int end = s.Length - 1;
-        while (s[end] == 32)
+        int k = s.Length - 1;
+        while (k >= 0 && s[k] == ' ')
         {
-            end--;
+            k--;
         }
-        for (int i = 0; i <= end; i++)
+        for (int i = k; i >= 0; i--)
         {
-            if (s[i] == 32) length = 0;
-            else length++;
+            if (s[i] == ' ')
+            {
+                return k - i;
+            }
         }
-        return length;
+        return k + 1;
     }
 }
 // @lc code=end
