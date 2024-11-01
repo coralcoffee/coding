@@ -19,6 +19,7 @@ public class CCC00S4Golf {
         for (int i = 0; i < clubs; i++) {
             strokes[i] = Integer.parseInt(inp.nextLine());
         }
+        inp.close();
         for (int i = strokes.length - 1; i > 0; i--) {
             boolean flag = false;
             for (int j = 0; j < i; j++) {
