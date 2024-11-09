@@ -3,7 +3,7 @@ package Dmoj;
 import java.util.*;
 
 // CCC '01 S2 - Spirals (Exact Version)
-public class CCC01S2SpiralsExactVersion {
+public class CCC01S2ExactVersion {
     public static void main(String[] args) {
         String input = """
                 2

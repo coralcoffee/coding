@@ -3,7 +3,7 @@ package Dmoj;
 import java.util.*;
 
 // CCC '01 S2 - Spirals
-public class CCC01S2Spirals {
+public class CCC01S2 {
     public static void main(String[] args) {
         String input = """
                 1
