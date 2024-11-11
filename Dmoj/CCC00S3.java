@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 // CCC '00 S3 - Surfing
-public class CCC00S3Surfing {
+public class CCC00S3 {
     public static void main(String[] args) {
         String input = """
                 3
