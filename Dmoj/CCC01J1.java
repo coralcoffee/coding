@@ -3,7 +3,7 @@ package Dmoj;
 import java.util.*;
 
 // CCC '01 J1 - Dressing Up
-public class CCC01J1DressingUp {
+public class CCC01J1 {
     public static void main(String[] args) {
         String input = """
                 5

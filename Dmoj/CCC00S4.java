@@ -3,7 +3,7 @@ package Dmoj;
 import java.util.*;
 
 // CCC '00 S4 - Golf
-public class CCC00S4Golf {
+public class CCC00S4 {
     public static void main(String[] args) {
         String input = """
                 100

@@ -3,7 +3,7 @@ package Dmoj;
 import java.util.*;
 
 // CCC '01 J2 - Mod Inverse
-public class CCC01J2ModInverse {
+public class CCC01J2 {
     public static void main(String[] args) {
         String input = """
                 4

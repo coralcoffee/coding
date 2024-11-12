@@ -2,7 +2,7 @@ package Dmoj;
 
 import java.util.Scanner;
 
-public class CCC00S1SlotMachines {
+public class CCC00S1 {
     public static void main(String[] args) {
         Scanner inp = new Scanner("48\n3\n10\n4\n");
         int quarters = Integer.parseInt(inp.nextLine());

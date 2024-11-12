@@ -3,7 +3,7 @@ package Dmoj;
 import java.util.*;
 
 // CCC '01 S1 - Keeping Score
-public class CCC01S1KeepingScore {
+public class CCC01S1 {
     public static void main(String[] args) {
         Scanner inp = new Scanner("C258TJKD69QAHSTJA");
         String cards = inp.nextLine();

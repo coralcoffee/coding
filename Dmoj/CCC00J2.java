@@ -2,7 +2,7 @@ package Dmoj;
 
 import java.util.Scanner;
 
-public class CCC00J29966 {
+public class CCC00J2 {
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
         int start = Integer.parseInt(inp.nextLine());

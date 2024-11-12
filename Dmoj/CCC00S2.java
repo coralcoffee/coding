@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CCC00S2BabblingBrooks {
+public class CCC00S2 {
     public static void main(String[] args) {
         Scanner inp = new Scanner("3\n10\n20\n30\n99\n1\n50\n88\n3\n88\n2\n77\n");
 
