@@ -1,3 +1,4 @@
+package samplej.ex;
 import java.security.Permission;
 
 public class Sample2 extends Object {

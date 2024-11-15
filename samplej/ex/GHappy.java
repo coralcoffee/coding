@@ -1,3 +1,4 @@
+package samplej.ex;
 public class GHappy {
     public static void main(String[] args) {
         GHappy gHappy = new GHappy();

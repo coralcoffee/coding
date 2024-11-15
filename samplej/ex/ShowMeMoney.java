@@ -1,3 +1,4 @@
+package samplej.ex;
 
 public class ShowMeMoney {
     public static void main(String[] args) {

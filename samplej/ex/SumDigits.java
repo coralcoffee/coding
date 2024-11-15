@@ -1,3 +1,4 @@
+package samplej.ex;
 import java.util.Scanner;
 
 public class SumDigits {
