@@ -1,7 +1,22 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
-int[] nums = { 1, 2, 3, 4, 5, 6 };
-var permutations = GetPermutations(nums, nums.Length);
+
+string s = "code";
+
+int b = 0;
+
+foreach (char c in s)
+{
+    b = b ^ c;
+}
+Console.WriteLine(b);
+Console.WriteLine(1 << ('a' - 'a'));
+return;
+
+int[] nums = { 1, 2, 3, 4 };
+var permutations = new List<List<int>>();
+Permute(nums, 0, nums.Length - 1, permutations);
+
 int permutation = 0;
 foreach (var perm in permutations)
 {
@@ -14,33 +29,38 @@ foreach (var perm in permutations)
 }
 Console.WriteLine($"Permutation is: {permutation}");
 
-List<List<int>> GetPermutations(int[] nums, int length)
-{
-    var result = new List<List<int>>();
-    Permute(nums, 0, length - 1, result);
-    return result;
-}
-
-void Permute(int[] array, int start, int end, List<List<int>> result)
+void Permute<T>(T[] array, int start, int end, List<List<T>> result)
 {
     if (start == end)
     {
-        result.Add(new List<int>(array));
+        result.Add(array.ToList()); // Using ToList() to create a copy for storing in the result list
+        return;
     }
-    else
+
+    HashSet<T> swappedElements = new HashSet<T>();
+
+    for (int i = start; i <= end; i++)
     {
-        for (int i = start; i <= end; i++)
+        // Skip duplicates if we have already seen this element at this level
+        if (swappedElements.Contains(array[i]))
         {
-            Swap(ref array[start], ref array[i]);
-            Permute(array, start + 1, end, result);
-            Swap(ref array[start], ref array[i]); // backtrack
+            continue;
+        }
+
+        swappedElements.Add(array[i]);
+
+        // Only swap if necessary to avoid redundant swaps
+        if (start != i)
+        {
+            (array[start], array[i]) = (array[i], array[start]);
+        }
+
+        Permute(array, start + 1, end, result);
+
+        // Backtrack
+        if (start != i)
+        {
+            (array[start], array[i]) = (array[i], array[start]);
         }
     }
-}
-
-void Swap(ref int a, ref int b)
-{
-    int temp = a;
-    a = b;
-    b = temp;
 }
