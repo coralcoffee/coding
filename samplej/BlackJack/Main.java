@@ -2,18 +2,14 @@ package samplej.BlackJack;
 
 import java.util.Scanner;
 
-import samplej.BlackJack.Player.PlayerType;
-
 public class Main {
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
-        Card[] cards = new Card[52];
-        String output = "";
-        for (int i = 0; i < 52; i++) {
-            cards[i] = new Card(i);
-            output += " " + cards[i].toString();
-        }
-        System.out.println(output);
+        Game game = new Game();
+        System.out.println(game.getDeckOfCards());
+        game.shuffleCards();
+        System.out.println(game.getDeckOfCards());
+
         System.out.print("How many players are there? [MAX: 6] ");
 
         int playerNum = Integer.parseInt(inp.nextLine());
@@ -24,41 +20,84 @@ public class Main {
             String name = inp.nextLine();
             System.out.print("  How much money do they have? ");
             double money = Double.parseDouble(inp.nextLine());
-            players[i] = new Player(name, money, PlayerType.Player);
+            players[i] = new Player(name, money);
         }
+        game.setPlayers(players);
         System.out.println(utils.SeperateLine);
 
-        utils.ShuffleCards(cards);
-
         boolean continuePlay = true;
-        int round = 1;
-        int cardIndex = 0;
+        // int cardIndex = 0;
         while (continuePlay) {
-            System.out.printf("ROUND %d:\n", round);
+            game.play();
+            System.out.printf("ROUND %d:\n", game.getRound());
 
-            for (var player : players) {
-                System.out.printf("%s's wager [$%.2f]: ", player.getName(), player.getMoney());
-                double bid = Double.parseDouble(inp.nextLine());
-                player.setBid(bid);
-                player.addCard(cards[cardIndex++]);
-                player.addCard(cards[cardIndex++]);
+            getPlayersBid(inp, game);
+
+            displayPlayStatus(game);
+
+            boolean isPlaying = true;
+            while (isPlaying) {
+                isPlaying = false;
+                for (var player : game.getPlayers()) {
+                    if (!player.getIsStand()) {
+                        System.out.println(player.getDisplayInfo());
+                        System.out.print("Hit or stand? [1 or 2] ");
+                        String str = inp.nextLine();
+                        if (str.equals("1")) {
+                            player.hit(game.getNextCard());
+                            isPlaying = true;
+                        } else if (str.equals("2")) {
+                            player.setIsStand();
+                        } else {
+                            // TODO: Error?
+                        }
+                    }
+                }
+
+                Dealer dealer = game.getDealer();
+                if (!dealer.getIsStand()) {
+                    dealer.hit(game.getNextCard());
+                }
                 System.out.println();
+                displayPlayStatus(game);
             }
-            // TODO: Check dealer and player, who get the card first?
-            var dealer = new Player("Dealer", Double.MAX_VALUE, PlayerType.Dealer);
-            dealer.addCard(cards[cardIndex++]);
-            dealer.addCard(cards[cardIndex++]);
-
-            System.out.println(dealer.getDisplayInfo());
-            for (var player : players) {
-                System.out.println(player.getDisplayInfo());
-            }
-//7)	Don’t ask the dealer if he/she would like to hit or stand. Decide using some casino rules - for example higher than 16 - stand, 16 or below hit.
-
+            System.out.println("compoelted");
+            System.out.println(utils.SeperateLine);
+            System.out.println(game.getRoundResult());
             System.out.print("Do you want to play another round? [Y/N] ");
-            String s = inp.nextLine();
-            continuePlay = s.equals("Y") || s.equals("y");
-            round++;
+            String str = inp.nextLine();
+            continuePlay = str.equals("Y") || str.equals("y");
         }
+
+        inp.close();
+    }
+
+    private static void getPlayersBid(Scanner inp, Game game) {
+        for (var player : game.getPlayers()) {
+            boolean validBid = false;
+            double bid = 0.0;
+
+            while (!validBid) {
+                System.out.printf("%s's wager [$%.2f]: ", player.getName(), player.getMoney());
+                bid = Double.parseDouble(inp.nextLine());
+
+                if (player.setBid(bid)) {
+                    validBid = true; // Bid is valid and successfully set
+                } else {
+                    System.out.println("You don't have enough money for that. Please enter a lower wager.");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    static void displayPlayStatus(Game game) {
+        Dealer dealer = game.getDealer();
+        System.out.println(dealer.getDisplayInfo());
+        for (var player : game.getPlayers()) {
+            System.out.println(player.getDisplayInfo());
+        }
+        System.out.println();
+        System.out.println();
     }
 }
