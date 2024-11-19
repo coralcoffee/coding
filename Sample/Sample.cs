@@ -16,3 +16,27 @@ public class Sample
         return -1;
     }
 }
+public class MovingAverage
+{
+    int size = 0;
+    private Queue<int> queue = new Queue<int>();
+    public MovingAverage(int size)
+    {
+        this.size = size;
+    }
+
+    public double Next(int val)
+    {
+        if (queue.Count >= size)
+        {
+            queque.Dequeue();
+        }
+        queue.Enqueue(val);
+        int total = 0;
+        foreach (int n in queue)
+        {
+            total += n;
+        }
+        return total / queue.Count;
+    }
+}
