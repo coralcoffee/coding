@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
     private final static String SeperateLine = "------------------------------";
     public static void main(String[] args) {
+        System.out.println("Hello world!");
         Scanner inp = new Scanner(System.in);
         Game game = new Game();
         System.out.println(game.getDeckOfCards());
