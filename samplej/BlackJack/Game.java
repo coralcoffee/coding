@@ -2,13 +2,15 @@ package samplej.BlackJack;
 
 import java.util.Random;
 
+import samplej.BlackJack.PlayerBase.PlayStatus;
+
 public class Game {
     private static final int MAX_CARD_COUNT = 52;
     private Card[] cards = new Card[MAX_CARD_COUNT];
     private int cardIndex = 0;
     private Dealer dealer;
     private Player[] players;
-    private int round = 1;
+    private int round = 0;
 
     public Game() {
         initializeDeck();
@@ -23,7 +25,7 @@ public class Game {
     }
 
     // Returns a string representation of the current deck of cards.
-    public String getDeckOfCards() {
+    public String displayDeck() {
         StringBuilder result = new StringBuilder();
         for (Card card : cards) {
             result.append(card.toString()).append(" ");
@@ -40,6 +42,7 @@ public class Game {
             cards[i] = cards[j];
             cards[j] = temp;
         }
+        cardIndex = 0; // Reset card index after shuffling
     }
 
     // Sets the players for the game.
@@ -67,7 +70,6 @@ public class Game {
         if (cardIndex >= MAX_CARD_COUNT) {
             initializeDeck();
             shuffleCards();
-            cardIndex = 0;
         }
         return cards[cardIndex++];
     }
@@ -75,9 +77,9 @@ public class Game {
     // Deals cards and starts a new round.
     public void play() {
         // Reset dealer and player hands before starting the new round.
-        dealer.deal();
+        dealer.resetHand();
         for (Player player : players) {
-            player.deal();
+            player.resetHand();
         }
 
         // Deal two cards to each player and the dealer.
@@ -92,15 +94,68 @@ public class Game {
         round++;
     }
 
+    public void dealerHit() {
+        if (isPlaying()) {
+            dealer.hit(getNextCard());
+        } else {
+            while (dealer.shouldHit()) {
+                dealer.hit(getNextCard());
+            }
+        }
+    }
+
+    public boolean isPlaying() {
+        if (!dealer.isPlaying()) {
+            return false;
+        }
+        for (Player player : players) {
+            if (player.getStatus() == PlayStatus.Playing) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void checkRoundResult() {
+        for (var player : players) {
+            var status = player.getStatus();
+            switch (status) {
+                case Bust:
+                    player.lost();
+                    break;
+                case Stand:
+                    int playerTotal = player.getTotal();
+                    int dealerTotal = dealer.getTotal();
+                    if (playerTotal == dealerTotal) {
+                        player.tie();
+                    } else if (playerTotal > dealerTotal) {
+                        player.won();
+                    } else {
+                        player.lost();
+                    }
+                case BlackJack:
+                    if (dealer.getStatus() == PlayStatus.BlackJack) {
+                        player.tie();
+                    } else {
+                        player.won();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
     // Returns the result of the current round.
     public String getRoundResult() {
         StringBuilder result = new StringBuilder();
-        result.append(String.format("ROUND %d RESULTS:\n\n", round - 1));
+        result.append(String.format("ROUND %d RESULTS:\n\n", round));
 
         result.append("Hands:\n");
-        result.append(dealer.getDisplayInfo()).append("\n");
+        result.append(dealer.getDisplayInfo(true)).append("\n");
         for (Player player : players) {
-            result.append(player.getDisplayInfo()).append("\n");
+            result.append(player.getDisplayInfo(true)).append("\n");
         }
 
         result.append("\n");
