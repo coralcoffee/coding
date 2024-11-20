@@ -16,8 +16,9 @@ public class Card {
         this.index = index;
         int d = index / 13;
         int m = index % 13;
+
         suit = Card.SUITS[d];
-        value = m == 0 ? 10 : m;
+        value = (m > 0 && m <= 10) ? m : 10;
         switch (m) {
             case 0:
                 rank = "K";

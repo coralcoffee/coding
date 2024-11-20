@@ -14,6 +14,9 @@ public class Game {
 
     public Game() {
         initializeDeck();
+        Main.showMessage(displayDeck());
+        shuffleCards();
+        Main.showMessage(displayDeck());
         dealer = new Dealer();
     }
 
@@ -30,7 +33,8 @@ public class Game {
         for (Card card : cards) {
             result.append(card.toString()).append(" ");
         }
-        return result.toString().trim();
+        result.append("\n");
+        return result.toString();
     }
 
     // Shuffles the deck of cards.
@@ -45,9 +49,27 @@ public class Game {
         cardIndex = 0; // Reset card index after shuffling
     }
 
-    // Sets the players for the game.
-    public void setPlayers(Player[] players) {
+    public void setupPlayers() {
+        Main.showMessage("How many players are there? [MAX: 6] ");
+
+        int playerNum = Integer.parseInt(Main.nextLine());
+        Player[] players = new Player[playerNum];
+        for (int i = 0; i < playerNum; i++) {
+            String message = String.format("For player %d:\n  What is their name? ", i + 1);
+            Main.showMessage(message);
+            String name = Main.nextLine();
+            Main.showMessage("  How much money do they have? ");
+            double money = Double.parseDouble(Main.nextLine());
+            Main.newLine();
+            players[i] = new Player(name, money);
+        }
         this.players = players;
+    }
+
+    public void setPlayersBet() {
+        for (var player : this.players) {
+            player.setBet();
+        }
     }
 
     // Returns the players in the game.
@@ -75,7 +97,7 @@ public class Game {
     }
 
     // Deals cards and starts a new round.
-    public void play() {
+    public void start() {
         // Reset dealer and player hands before starting the new round.
         dealer.resetHand();
         for (Player player : players) {
@@ -116,6 +138,39 @@ public class Game {
         return false;
     }
 
+    public void play() {
+        while (isPlaying()) {
+            for (var player : this.players) {
+                Main.showMessage(player.getDisplayInfo(false));
+                if (player.isPlaying()) {
+                    Main.showMessage("\nHit or stand? [1 or 2] ");
+                    String str = Main.nextLine();
+                    if (str.equals("1")) {
+                        player.hit(getNextCard());
+                    } else if (str.equals("2")) {
+                        player.setIsStand();
+                    } else {
+                        // TODO: Error?
+                    }
+                }
+            }
+
+            dealerHit();
+
+            Main.newLine();
+            displayPlayStatus();
+            Main.newLine();
+        }
+    }
+
+    public void displayPlayStatus() {
+        Dealer dealer = this.dealer;
+        Main.showMessage(dealer.getDisplayInfo(false) + "\n");
+        for (var player : this.players) {
+            Main.showMessage(player.getDisplayInfo(false) + "\n");
+        }
+    }
+
     public void checkRoundResult() {
         for (var player : players) {
             var status = player.getStatus();
@@ -124,6 +179,10 @@ public class Game {
                     player.lost();
                     break;
                 case Stand:
+                    if (dealer.getStatus() == PlayStatus.Bust) {
+                        player.won();
+                        break;
+                    }
                     int playerTotal = player.getTotal();
                     int dealerTotal = dealer.getTotal();
                     if (playerTotal == dealerTotal) {
@@ -133,6 +192,7 @@ public class Game {
                     } else {
                         player.lost();
                     }
+                    break;
                 case BlackJack:
                     if (dealer.getStatus() == PlayStatus.BlackJack) {
                         player.tie();
@@ -143,7 +203,6 @@ public class Game {
                 default:
                     break;
             }
-
         }
     }
 

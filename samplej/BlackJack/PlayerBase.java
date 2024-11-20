@@ -38,15 +38,6 @@ abstract public class PlayerBase {
         return bet;
     }
 
-    public boolean setBet(double bet) {
-        if (bet > money) {
-            return false;
-        }
-        this.bet = bet;
-        this.money -= bet;
-        return true;
-    }
-
     public void addCard(Card card) {
         cardList.add(card);
         updateTotalAndStatus();

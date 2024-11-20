@@ -26,6 +26,23 @@ public class Player extends PlayerBase {
         playResult = PlayResult.Lost;
     }
 
+    public void setBet() {
+        boolean validBet = false;
+        double bet = 0.0;
+
+        while (!validBet) {
+            Main.showMessage(String.format("%s's wager [$%.2f]: ", this.name, this.money));
+            bet = Double.parseDouble(Main.nextLine());
+            if (bet > money) {
+                Main.showMessage("You don't have enough money for that. Please enter a lower wager.\n");
+            } else {
+                this.bet = bet;
+                this.money -= bet;
+                validBet = true; 
+            }
+        }
+    }
+
     @Override
     public String getDisplayInfo(boolean revealResult) {
         StringBuilder result = new StringBuilder(String.format("%s's hand: ", name));
