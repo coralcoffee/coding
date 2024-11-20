@@ -3,14 +3,15 @@ package samplej.BlackJack;
 import java.util.Random;
 
 public class Game {
-    private Card[] cards = new Card[52];
+    private static final int CARD_MAX = 52;
+    private Card[] cards = new Card[CARD_MAX];
     private int cardIndex = 0;
     private Dealer dealer;
     private Player[] players;
     private int round = 1;
 
     public Game() {
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < CARD_MAX; i++) {
             cards[i] = new Card(i);
         }
         dealer = new Dealer();
@@ -18,7 +19,7 @@ public class Game {
 
     public String getDeckOfCards() {
         String result = "";
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < CARD_MAX; i++) {
             result += " " + cards[i].toString();
         }
         return result;
@@ -51,12 +52,15 @@ public class Game {
     }
 
     public Card getNextCard() {
+        if (cardIndex >= CARD_MAX) {
+            shuffleCards();
+            cardIndex = 0;
+        }
         return cards[cardIndex++];
     }
 
     public void play() {
         round++;
-        // TODO: dealer and player, who get the card first?
         for (var player : players) {
             player.deal();
             player.addCard(getNextCard());

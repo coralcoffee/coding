@@ -1,38 +1,38 @@
 package samplej.BlackJack;
 
 public class Card {
-    final static char hearts = '\u2665';
-    final static char diamonds = '\u2666';
-    final static char spades = '\u2660';
-    final static char clubs = '\u2663';
-    final static char[] suits = { hearts, diamonds, clubs, spades };
+    public static final char HEARTS = '♥';
+    public static final char DIAMONDS = '♦';
+    public static final char SPADES = '♠';
+    public static final char CLUBS = '♣';
+    public static final char[] SUITS = { HEARTS, DIAMONDS, CLUBS, SPADES };
 
     private int index;
     private int value;
     private char suit;
-    private String card;
+    private String rank;
 
     public Card(int index) {
         this.index = index;
         int d = index / 13;
         int m = index % 13;
-        suit = Card.suits[d];
+        suit = Card.SUITS[d];
         value = m == 0 ? 10 : m;
         switch (m) {
             case 0:
-                card = "K";
+                rank = "K";
                 break;
             case 1:
-                card = "A";
+                rank = "A";
                 break;
             case 11:
-                card = "J";
+                rank = "J";
                 break;
             case 12:
-                card = "Q";
+                rank = "Q";
                 break;
             default:
-                card = String.valueOf(m);
+                rank = String.valueOf(m);
                 break;
         }
     }
@@ -49,12 +49,12 @@ public class Card {
         return suit;
     }
 
-    public String getCard() {
-        return card;
+    public String getRank() {
+        return rank;
     }
 
     @Override
     public String toString() {
-        return String.format("%s%s", card, suit);
+        return String.format("%s%s", rank, suit);
     }
 }
