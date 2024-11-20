@@ -11,22 +11,29 @@ public class Game {
     private int round = 1;
 
     public Game() {
-        for (int i = 0; i < CARD_MAX; i++) {
-            cards[i] = new Card(i);
-        }
+        initializeDeck();
         dealer = new Dealer();
     }
 
-    public String getDeckOfCards() {
-        String result = "";
+    // Initializes the deck with 52 cards.
+    private void initializeDeck() {
         for (int i = 0; i < CARD_MAX; i++) {
-            result += " " + cards[i].toString();
+            cards[i] = new Card(i);
         }
-        return result;
     }
 
+    // Returns a string representation of the current deck of cards.
+    public String getDeckOfCards() {
+        StringBuilder result = new StringBuilder();
+        for (Card card : cards) {
+            result.append(card.toString()).append(" ");
+        }
+        return result.toString().trim();
+    }
+
+    // Shuffles the deck of cards.
     public void shuffleCards() {
-        var rand = new Random();
+        Random rand = new Random();
         for (int i = cards.length - 1; i > 0; i--) {
             int j = rand.nextInt(i + 1);
             Card temp = cards[i];
@@ -35,22 +42,27 @@ public class Game {
         }
     }
 
+    // Sets the players for the game.
     public void setPlayers(Player[] players) {
         this.players = players;
     }
 
+    // Returns the players in the game.
     public Player[] getPlayers() {
         return players;
     }
 
+    // Returns the dealer of the game.
     public Dealer getDealer() {
         return dealer;
     }
 
+    // Returns the current round number.
     public int getRound() {
         return round;
     }
 
+    // Gets the next card from the deck, reshuffling if necessary.
     public Card getNextCard() {
         if (cardIndex >= CARD_MAX) {
             shuffleCards();
@@ -59,31 +71,42 @@ public class Game {
         return cards[cardIndex++];
     }
 
+    // Deals cards and starts a new round.
     public void play() {
-        round++;
-        for (var player : players) {
+        // Reset dealer and player hands before starting the new round.
+        dealer.deal();
+        for (Player player : players) {
             player.deal();
+        }
+
+        // Deal two cards to each player and the dealer.
+        for (Player player : players) {
             player.addCard(getNextCard());
             player.addCard(getNextCard());
         }
-        dealer.deal();
         dealer.addCard(getNextCard());
         dealer.addCard(getNextCard());
+
+        // Increment round after the cards are dealt.
+        round++;
     }
 
+    // Returns the result of the current round.
     public String getRoundResult() {
-        String result = String.format("ROUND %d RESULTS:\n\n", round);
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("ROUND %d RESULTS:\n\n", round - 1));
 
-        result += "Hands:\n";
-        result += dealer.getDisplayInfo() + "\n";
+        result.append("Hands:\n");
+        result.append(dealer.getDisplayInfo()).append("\n");
         for (Player player : players) {
-            result += player.getDisplayInfo() + "\n";
+            result.append(player.getDisplayInfo()).append("\n");
         }
 
-        result += "\n";
+        result.append("\n");
         for (Player player : players) {
-            result += String.format("%s: $%.2f", player.getName(), player.getMoney());
+            result.append(String.format("%s: $%.2f\n", player.getName(), player.getMoney()));
         }
-        return result;
+
+        return result.toString().trim();
     }
 }
