@@ -7,7 +7,7 @@ public class Main {
     private static Scanner scanner;
 
     public static void main(String[] args) {
-
+        System.out.println("Hello world!");
         Joke joke = new Joke();
         //joke.loadJokes();
 
