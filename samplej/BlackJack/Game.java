@@ -3,8 +3,8 @@ package samplej.BlackJack;
 import java.util.Random;
 
 public class Game {
-    private static final int CARD_MAX = 52;
-    private Card[] cards = new Card[CARD_MAX];
+    private static final int MAX_CARD_COUNT = 52;
+    private Card[] cards = new Card[MAX_CARD_COUNT];
     private int cardIndex = 0;
     private Dealer dealer;
     private Player[] players;
@@ -17,7 +17,7 @@ public class Game {
 
     // Initializes the deck with 52 cards.
     private void initializeDeck() {
-        for (int i = 0; i < CARD_MAX; i++) {
+        for (int i = 0; i < MAX_CARD_COUNT; i++) {
             cards[i] = new Card(i);
         }
     }
@@ -64,7 +64,8 @@ public class Game {
 
     // Gets the next card from the deck, reshuffling if necessary.
     public Card getNextCard() {
-        if (cardIndex >= CARD_MAX) {
+        if (cardIndex >= MAX_CARD_COUNT) {
+            initializeDeck();
             shuffleCards();
             cardIndex = 0;
         }

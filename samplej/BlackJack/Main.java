@@ -3,6 +3,7 @@ package samplej.BlackJack;
 import java.util.Scanner;
 
 public class Main {
+    private final static String SeperateLine = "------------------------------";
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
         Game game = new Game();
@@ -23,7 +24,7 @@ public class Main {
             players[i] = new Player(name, money);
         }
         game.setPlayers(players);
-        System.out.println(utils.SeperateLine);
+        System.out.println(SeperateLine);
 
         boolean continuePlay = true;
         // int cardIndex = 0;
@@ -39,7 +40,7 @@ public class Main {
             while (isPlaying) {
                 isPlaying = false;
                 for (var player : game.getPlayers()) {
-                    if (!player.getIsStand()) {
+                    if (!player.getIsPlaying()) {
                         System.out.println(player.getDisplayInfo());
                         System.out.print("Hit or stand? [1 or 2] ");
                         String str = inp.nextLine();
@@ -55,14 +56,14 @@ public class Main {
                 }
 
                 Dealer dealer = game.getDealer();
-                if (!dealer.getIsStand()) {
+                if (!dealer.getIsPlaying()) {
                     dealer.hit(game.getNextCard());
                 }
                 System.out.println();
                 displayPlayStatus(game);
             }
             System.out.println("compoelted");
-            System.out.println(utils.SeperateLine);
+            System.out.println(SeperateLine);
             System.out.println(game.getRoundResult());
             System.out.print("Do you want to play another round? [Y/N] ");
             String str = inp.nextLine();
@@ -81,7 +82,7 @@ public class Main {
                 System.out.printf("%s's wager [$%.2f]: ", player.getName(), player.getMoney());
                 bid = Double.parseDouble(inp.nextLine());
 
-                if (player.setBid(bid)) {
+                if (player.setBet(bid)) {
                     validBid = true; // Bid is valid and successfully set
                 } else {
                     System.out.println("You don't have enough money for that. Please enter a lower wager.");
