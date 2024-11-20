@@ -1,4 +1,4 @@
-package samplej.BlackJack;
+package BlackJack;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,22 +10,18 @@ import java.util.List;
 import java.util.Queue;
 
 public class Joke {
-    private Queue<String> jokes;
+    private static Queue<String> jokes = new LinkedList<>();
 
-    public Joke() {
-        jokes = new LinkedList<>();
-    }
-
-    public String nextJoke() {
-        if (this.jokes.isEmpty()) {
+    public static String nextJoke() {
+        if (jokes.isEmpty()) {
             loadJokes();
         }
         return jokes.poll();
     }
 
-    private void loadJokes() {
+    private static void loadJokes() {
         String currentPath = System.getProperty("user.dir");
-        String filePath = currentPath + "\\samplej\\BlackJack\\jokes.txt";
+        String filePath = currentPath + "\\BlackJack\\jokes.txt";
         List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

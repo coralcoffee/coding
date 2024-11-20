@@ -1,4 +1,4 @@
-package samplej.BlackJack;
+package BlackJack;
 
 public class Dealer extends PlayerBase {
     public Dealer() {
@@ -18,6 +18,7 @@ public class Dealer extends PlayerBase {
         if (revealResult) {
             result.append(String.format(" [total: %d]", getTotal()));
         }
+        result.append("\n");
         return result.toString();
     }
 

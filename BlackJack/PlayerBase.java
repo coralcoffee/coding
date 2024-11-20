@@ -1,4 +1,4 @@
-package samplej.BlackJack;
+package BlackJack;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,7 @@ abstract public class PlayerBase {
         this.money = money;
         cardList = new ArrayList<>();
         status = PlayStatus.Playing;
+        this.playResult = PlayResult.Tie;// Initial a value to avoid null
     }
 
     public String getName() {
@@ -32,10 +33,6 @@ abstract public class PlayerBase {
 
     public double getMoney() {
         return money;
-    }
-
-    public double getBet() {
-        return bet;
     }
 
     public void addCard(Card card) {
@@ -95,10 +92,12 @@ abstract public class PlayerBase {
     }
 
     public void setIsStand() {
-        status = PlayStatus.Stand;
+        if (status == PlayStatus.Playing) {
+            status = PlayStatus.Stand;
+        }
     }
 
-    public boolean getIsStand() {
+    public boolean isStand() {
         return status == PlayStatus.Stand;
     }
 

@@ -1,4 +1,4 @@
-package samplej.BlackJack;
+package BlackJack;
 
 public class Card {
     public static final char HEARTS = '♥';

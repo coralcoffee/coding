@@ -1,4 +1,4 @@
-package samplej.BlackJack;
+package BlackJack;
 
 public class Player extends PlayerBase {
     public Player(String name, double money) {
@@ -6,24 +6,30 @@ public class Player extends PlayerBase {
     }
 
     public void won() {
-        if (status == PlayStatus.BlackJack) {
-            this.money += this.bet * 5 / 2;
-        } else {
-            this.money += this.bet * 2;
-        }
-        this.bet = 0;
-        playResult = PlayResult.Win;
+        resolveBet(PlayResult.Win);
     }
 
     public void tie() {
-        playResult = PlayResult.Tie;
-        this.money += this.bet;
-        this.bet = 0;
+        resolveBet(PlayResult.Tie);
     }
 
     public void lost() {
-        this.bet = 0;
-        playResult = PlayResult.Lost;
+        resolveBet(PlayResult.Lost);
+    }
+
+    public void resolveBet(PlayResult result) {
+        switch (result) {
+            case Win:
+                money += bet * 2;
+                break;
+            case Tie:
+                money += bet;
+                break;
+            case Lost:
+                break;
+        }
+        bet = 0;
+        playResult = result;
     }
 
     public void setBet() {
@@ -38,7 +44,7 @@ public class Player extends PlayerBase {
             } else {
                 this.bet = bet;
                 this.money -= bet;
-                validBet = true; 
+                validBet = true;
             }
         }
     }

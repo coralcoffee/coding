@@ -1,4 +1,4 @@
-package samplej.BlackJack;
+package BlackJack;
 
 import java.util.Scanner;
 
@@ -7,13 +7,9 @@ public class Main {
     private static Scanner scanner;
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        Joke joke = new Joke();
-        //joke.loadJokes();
-
         scanner = new Scanner(System.in);
         Game game = new Game();
-        System.out.println();
+        newLine();
 
         game.setupPlayers();
 
@@ -22,18 +18,24 @@ public class Main {
             game.start();
             System.out.println(SeperateLine);
             System.out.printf("ROUND %d:\n", game.getRound());
-
+            newLine();
             game.setPlayersBet();
-            System.out.println();
+            newLine();
 
             game.displayPlayStatus();
-            System.out.println();
+            newLine();
 
             game.play();
 
             System.out.println(SeperateLine);
-            game.checkRoundResult();
+            var winners = game.checkRoundResult();
             System.out.println(game.getRoundResult());
+
+            newLine();
+            for (var winner : winners) {
+                showMessage(String.format("%s says: \"%s\"\n", winner.getName(), Joke.nextJoke()));
+            }
+            newLine();
             System.out.print("Do you want to play another round? [Y/N] ");
             String str = scanner.nextLine();
             continuePlay = str.equals("Y") || str.equals("y");
@@ -46,7 +48,7 @@ public class Main {
         System.out.print(message);
     }
 
-    public static void newLine(){
+    public static void newLine() {
         System.out.println();
     }
 
