@@ -62,12 +62,13 @@
 # @lc code=start
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        dict = {}
-        for (i, n) in enumerate(nums):
+        map = {}
+        for i, n in enumerate(nums):
             sub = target - n
-            if sub in dict:
-                return [dict[sub], i]
-            dict[n] = i
+            if sub in map:
+                return [map[sub], i]
+            map[n] = i
+        
         return []
 
 # @lc code=end

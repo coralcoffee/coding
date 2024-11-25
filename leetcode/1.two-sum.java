@@ -65,15 +65,15 @@ import java.util.HashMap;
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer> dict = new HashMap<>();
+        var map = new HashMap<Integer, Integer>();
         for (int i = 0; i < nums.length; i++) {
-            var sub = target - nums[i];
-            if (dict.containsKey(sub)) {
-                return new int[] { dict.get(sub), i };
+            int sub = target - nums[i];
+            if (map.containsKey(sub)) {
+                return new int[] { map.get(sub), i };
             }
-            dict.put(nums[i], i);
+            map.put(nums[i], i);
         }
-        return null;
+        return new int[0];
     }
 }
 // @lc code=end
