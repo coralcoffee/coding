@@ -1,4 +1,4 @@
-public class Sample
+public class Sample1
 {
     int BinarySearch(int[] nums, int target)
     {
@@ -29,7 +29,7 @@ public class MovingAverage
     {
         if (queue.Count >= size)
         {
-            queque.Dequeue();
+            queue.Dequeue();
         }
         queue.Enqueue(val);
         int total = 0;
