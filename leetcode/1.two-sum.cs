@@ -64,15 +64,18 @@ public class Solution
 {
     public int[] TwoSum(int[] nums, int target)
     {
-        var map = new Dictionary<int, int>();
+        var dict = new Dictionary<int, int>();
         for (int i = 0; i < nums.Length; i++)
         {
-            var sub = target - nums[i];
-            if (map.ContainsKey(sub))
+            int sub = target - nums[i];
+            if (dict.ContainsKey(sub))
             {
-                return [map[sub], i];
+                return [dict[sub], i];
             }
-            map[nums[i]] = i;
+            else
+            {
+                dict[nums[i]] = i;
+            }
         }
         return [];
     }
