@@ -54,44 +54,46 @@ public class Solution
 {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2)
     {
-        if (nums1.Length > nums2.Length) return FindMedianSortedArrays(nums2, nums1);
-
-        int m = nums1.Length;
-        int n = nums2.Length;
-
-        if (m == 0)
-            return n % 2 == 0 ? (nums2[n / 2 - 1] + nums2[n / 2]) / 2.0 : nums2[n / 2];
-
-        int low = 0, high = m, halfLen = (m + n + 1) / 2;
-
-        while (low <= high)
+        int FindKthElement(int k)
         {
-            int partitionX = (low + high) / 2;
-            int partitionY = halfLen - partitionX;
+            int index1 = 0, index2 = 0;
 
-            if (partitionX < m && nums2[partitionY - 1] > nums1[partitionX])
+            while (true)
             {
-                low = partitionX + 1;
-            }
-            else if (partitionX > 0 && nums1[partitionX - 1] > nums2[partitionY])
-            {
-                high = partitionX - 1;
-            }
-            else
-            {
-                int maxLeft = Math.Max(partitionX == 0 ? Int32.MinValue : nums1[partitionX - 1],
-                                       partitionY == 0 ? Int32.MinValue : nums2[partitionY - 1]);
+                if (index1 == nums1.Length)
+                    return nums2[index2 + k - 1];
+                if (index2 == nums2.Length)
+                    return nums1[index1 + k - 1];
 
-                if ((m + n) % 2 == 1)
-                    return maxLeft;
+                if (k == 1)
+                    return Math.Min(nums1[index1], nums2[index2]);
 
-                int minRight = Math.Min(partitionX == m ? Int32.MaxValue : nums1[partitionX],
-                                        partitionY == n ? Int32.MaxValue : nums2[partitionY]);
+                int newIndex1 = Math.Min(index1 + k / 2 - 1, nums1.Length - 1);
+                int newIndex2 = Math.Min(index2 + k / 2 - 1, nums2.Length - 1);
+                int pivot1 = nums1[newIndex1], pivot2 = nums2[newIndex2];
 
-                return (maxLeft + minRight) / 2.0;
+                if (pivot1 <= pivot2)
+                {
+                    k -= (newIndex1 - index1 + 1);
+                    index1 = newIndex1 + 1;
+                }
+                else
+                {
+                    k -= (newIndex2 - index2 + 1);
+                    index2 = newIndex2 + 1;
+                }
             }
         }
-        return 0;
+
+        int totalLength = nums1.Length + nums2.Length;
+        if (totalLength % 2 == 1)
+        {
+            return FindKthElement(totalLength / 2 + 1);
+        }
+        else
+        {
+            return (FindKthElement(totalLength / 2) + FindKthElement(totalLength / 2 + 1)) / 2.0;
+        }
     }
 }
 // @lc code=end
