@@ -46,24 +46,28 @@ public class Solution
 {
     public string LongestPalindrome(string s)
     {
+        if (string.IsNullOrEmpty(s)) return "";
         int startIndex = 0, maxLength = 0;
-        int start = 0, end = 0;
-        for (int i = 0; i < s.Length; i++)
+        int i = 0;
+        while (i < s.Length)
         {
-            start = end = i;
-            while (end < s.Length - 1 && s[start] == s[end + 1])
+            int left = i, right = i;
+            while (right < s.Length && s[left] == s[right])
             {
-                end++;
+                right++;
+                i++;
             }
-            while (start > 0 && end < s.Length - 1 && s[start - 1] == s[end + 1])
+            left--;
+            while (left >= 0 && right < s.Length && s[left] == s[right])
             {
-                start--;
-                end++;
+                left--;
+                right++;
             }
-            if (end - start + 1 > maxLength)
+            int currentLength = right - left - 1;
+            if (currentLength > maxLength)
             {
-                startIndex = start;
-                maxLength = end - start + 1;
+                startIndex = left + 1;
+                maxLength = currentLength;
             }
         }
         return s.Substring(startIndex, maxLength);
