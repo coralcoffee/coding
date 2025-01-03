@@ -75,46 +75,29 @@ public class Solution
 {
     public string Convert(string s, int numRows)
     {
-        if (numRows <= 1) return s;
+        if (numRows == 1 || numRows == s.Length) return s;
+        StringBuilder[] sbs = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++)
+        {
+            sbs[i] = new StringBuilder();
+        }
 
-        int groupSize = numRows * 2 - 2;
-        int groupCount = (s.Length + groupSize - 1) / groupSize;
-        var result = new char[s.Length];
-        int index = 0;
-        for (int i = 0; i < groupCount; i++)
+        int currentRow = 0;
+        bool goingDown = false;
+        foreach (char c in s)
         {
-            result[index] = s[i * groupSize];
-            index++;
+            sbs[currentRow].Append(c);
+            if (currentRow == 0 || currentRow == numRows - 1)
+                goingDown = !goingDown;
+            currentRow = goingDown ? currentRow + 1 : currentRow - 1;
         }
-        for (int j = 1; j < numRows - 1; j++)
-        {
-            for (int i = 0; i < groupCount; i++)
-            {
-                int p = groupSize * i + j;
-                if (p < s.Length)
-                {
-                    result[index] = s[p];
-                    index++;
-                }
-                p = groupSize * (i + 1) - j;
-                if (p < s.Length)
-                {
-                    result[index] = s[p];
-                    index++;
-                }
-            }
 
-        }
-        for (int i = 0; i < groupCount; i++)
+        StringBuilder result = new StringBuilder();
+        foreach (StringBuilder sb in sbs)
         {
-            int p = i * groupSize + numRows - 1;
-            if (p < s.Length)
-            {
-                result[index] = s[p];
-                index++;
-            }
+            result.Append(sb);
         }
-        return new string(result);
+        return result.ToString();
     }
 }
 // @lc code=end
