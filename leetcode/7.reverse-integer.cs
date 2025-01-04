@@ -56,14 +56,18 @@ public class Solution
 {
     public int Reverse(int x)
     {
-        long result = 0;
+        int result = 0;
+        int max = Int32.MaxValue / 10;
+        int min = Int32.MinValue / 10;
         while (x != 0)
         {
-            result = result * 10 + (x % 10);
-            x = x / 10;
+            int pop = x % 10;
+            x /= 10;
+            if (result > max || (result == max && pop > 7)) return 0;
+            if (result < min || (result == min && pop < -8)) return 0;
+            result = result * 10 + pop;
         }
-        if (result > Int32.MaxValue || result < Int32.MinValue) return 0;
-        return (int)result;
+        return result;
     }
 }
 // @lc code=end
