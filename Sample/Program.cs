@@ -65,21 +65,21 @@ void Permute<T>(T[] array, int start, int end, List<List<T>> result)
     }
 }
 
-public int SumOfLeftLeaves(TreeNode root)
-{
-    int result = 0;
-    SumOfLeftLeaves(root, ref result);
+//public int SumOfLeftLeaves(TreeNode root)
+//{
+//    int result = 0;
+//    SumOfLeftLeaves(root, ref result);
 
-    return result;
-}
+//    return result;
+//}
 
-private int SumOfLeftLeaves(TreeNode root, ref int result)
-{
+//private int SumOfLeftLeaves(TreeNode root, ref int result)
+//{
 
-    if (root == null) return 0;
-    if (root.left == null && root.right == null) return root.val;
+//    if (root == null) return 0;
+//    if (root.left == null && root.right == null) return root.val;
 
-    result += SumOfLeftLeaves(root.left, ref result);
+//    result += SumOfLeftLeaves(root.left, ref result);
 
-    SumOfLeftLeaves(root.right, ref result);
-}
+//    SumOfLeftLeaves(root.right, ref result);
+//}
