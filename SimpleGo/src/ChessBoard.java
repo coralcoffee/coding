@@ -12,8 +12,8 @@ public class ChessBoard extends JPanel {
     private int gridNum, gridLen;
     private int chessmanLength;
     private ChessPoint[][] map;
-    private Image offScreen;
-    private Graphics offGrid;
+    private Image background;
+    private Graphics grid;
     private int size = 0;
     private int top = 13, left = 13;
     private Point mouseClick;
@@ -36,8 +36,8 @@ public class ChessBoard extends JPanel {
     @Override
     public void addNotify() {
         super.addNotify();
-        offScreen = createImage(size, size);
-        offGrid = offScreen.getGraphics();
+        background = createImage(size, size);
+        grid = background.getGraphics();
     }
 
     public void startGame() {
@@ -83,39 +83,39 @@ public class ChessBoard extends JPanel {
     }
 
     public void paint(Graphics g) {
-        offGrid.setColor(new Color(180, 150, 100));
-        offGrid.fillRect(0, 0, size, size);
+        grid.setColor(new Color(180, 150, 100));
+        grid.fillRect(0, 0, size, size);
 
-        offGrid.setColor(Color.black);
+        grid.setColor(Color.black);
         for (int i = 0; i < gridNum + 1; i++) {
             int x1 = left + i * gridLen;
             int x2 = x1;
             int y1 = top;
             int y2 = top + gridNum * gridLen;
-            offGrid.drawLine(x1, y1, x2, y2);
+            grid.drawLine(x1, y1, x2, y2);
 
             x1 = left;
             x2 = left + gridNum * gridLen;
             y1 = top + i * gridLen;
             y2 = y1;
-            offGrid.drawLine(x1, y1, x2, y2);
+            grid.drawLine(x1, y1, x2, y2);
         }
         for (int i = 0; i < gridNum + 1; i++) {
             for (int j = 0; j < gridNum + 1; j++) {
                 if (map[i][j] == null)
                     continue;
-                offGrid.setColor(map[i][j].color == ChessPoint.black ? Color.black : Color.white);
-                offGrid.fillOval(left + i * gridLen - chessmanLength / 2,
+                grid.setColor(map[i][j].color == ChessPoint.black ? Color.black : Color.white);
+                grid.fillOval(left + i * gridLen - chessmanLength / 2,
                         top + j * gridLen - chessmanLength / 2, chessmanLength, chessmanLength);
             }
         }
 
         if (mouseClick != null) {
-            offGrid.setColor(currentTurn == ChessPoint.black ? Color.gray : new Color(200, 200, 250));
-            offGrid.fillOval(left + mouseClick.x * gridLen - chessmanLength / 2,
+            grid.setColor(currentTurn == ChessPoint.black ? Color.gray : new Color(200, 200, 250));
+            grid.fillOval(left + mouseClick.x * gridLen - chessmanLength / 2,
                     top + mouseClick.y * gridLen - chessmanLength / 2, chessmanLength, chessmanLength);
         }
-        g.drawImage(offScreen, 80, 0, this);
+        g.drawImage(background, 80, 0, this);
     }
 
     class ControlPanel extends Panel {
