@@ -15,8 +15,8 @@ public class Permutations
             selected[i] = true;
             state.Add(choices[i]);
             Backtrack(state, choices, selected, res);
-            state.RemoveAt(state.Count - 1);
             selected[i] = false;
+            state.RemoveAt(state.Count - 1);
         }
     }
     public List<List<int>> PermutationI(int[] nums)
