@@ -1,11 +1,12 @@
 ﻿using NUnit.Framework;
 using Shouldly;
+using Xunit;
 
 namespace Sample.Searching;
 
 public class SearchingTests
 {
-    [Test]
+    [Fact]
     public void Two_Sum_Test()
     {
         Searching searching = new Searching();
@@ -18,7 +19,7 @@ public class SearchingTests
 
     }
 
-    [Test]
+    [Fact]
     public void Two_Sum_With_Hash_Test()
     {
         Searching searching = new Searching();

@@ -1,14 +1,13 @@
-﻿using NUnit.Framework;
-using Sample.Backtracking;
+﻿using Sample.Backtracking;
 using Shouldly;
+using Xunit;
 
 namespace SubsetSumTests
 {
-    [TestFixture]
     public class SubsetSumTests
     {
 
-        [Test]
+        [Fact]
         public void SubsetSumI_SingleSubset_ReturnsCorrectSubset()
         {
             // Arrange
@@ -22,7 +21,7 @@ namespace SubsetSumTests
             result.ShouldContain(new List<int> { 3 });
         }
 
-        [Test]
+        [Fact]
         public void SubsetSumI_MultipleSubsets_ReturnsAllSubsets()
         {
             // Arrange
@@ -38,7 +37,7 @@ namespace SubsetSumTests
             result.ShouldContain(new List<int> { 3 });
         }
 
-        [Test]
+        [Fact]
         public void SubsetSumI_EmptyArray_ReturnsEmptyList()
         {
             // Arrange
@@ -52,7 +51,7 @@ namespace SubsetSumTests
             result.ShouldBeEmpty();
         }
 
-        [Test]
+        [Fact]
         public void SubsetSumI_TargetZero_ReturnsEmptySubset()
         {
             // Arrange
