@@ -2,7 +2,7 @@
 
 public class Traversal
 {
-    private void Backtrack(BinaryTreeNode? root, List<BinaryTreeNode> res)
+    private void Backtrack(TreeNode? root, List<TreeNode> res)
     {
         if (root == null)
         {

@@ -15,7 +15,7 @@ public class ChessGame extends JFrame {
         this.setLayout(new BorderLayout());
         this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-        setScreenCenter();
+       // setScreenCenter();
         this.setVisible(true);
     }
 
